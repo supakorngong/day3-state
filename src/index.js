@@ -17,18 +17,80 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 //   return <input value={data} onChange={handleChange}/>;
 // }
 
+
+// function App(){
+//   const [selected,setselected] = React.useState("3")
+//   const handleSelect = (event) =>{
+//     // console.log(event.target.value)
+//     setselected(event.target.value)
+//   }
+//   return(
+//     <select onChange={handleSelect} value={selected}>
+//       <option >option-1</option>
+//       <option value="2">option-2</option>
+//       <option value="3">option-3</option>
+//     </select>
+//   )
+// }
+
+
 function App(){
-  const [selected,setselected] = React.useState("3")
-  const handleSelect = (event) =>{
-    // console.log(event.target.value)
-    setselected(event.target.value)
+   // ใช้ งาน state 
+  //เขียน handler 
+  // ผูก UI (state,Handler)
+  const [username,setUsername] = React.useState("");
+  const handleChangeUsername = (event) => setUsername(event.target.value);
+  const [password,setPassword] = React.useState("");
+  const handleChangePassword = (event) => setPassword(event.target.value);
+  const [selected,setSeleceted] = React.useState("male");
+  const handleChangeSeleceted = (event) => setSeleceted(event.target.value);
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    // validation
+    if(password.length < 6) return;
+    // send to server
+    console.log('submit')
+
+    // Reset State
+    setUsername("");
+    setPassword("");
+    setSeleceted('male');
   }
+  const handleReset = (event) =>{
+    setUsername("") // รู้ว่าจะ set username
+    console.log("state",username)
+    setPassword("") // รู้ว่าจะ set password
+    setSeleceted("male") // รู้ว่าจะ set selected
+    // code ..
+    // code ..
+    // end handler function => react จะอัพเดท state พร้อมกันทีเดียว
+  }
+ 
   return(
-    <select onChange={handleSelect} value={selected}>
-      <option >option-1</option>
-      <option value="2">option-2</option>
-      <option value="3">option-3</option>
-    </select>
+    <form onSubmit={handleSubmit}>
+      <div>
+        <label>username</label>
+        <input type="text" placeholder='eg. johneiei' value={username} onChange={handleChangeUsername}/>
+      </div>
+      
+      <div>
+        <label>password</label>
+        <input type="password" value={password} onChange={handleChangePassword}/>
+      </div>
+      <div>
+        <label>gender</label>
+        <select value={selected} onChange={handleChangeSeleceted}>
+          <option>male</option>
+          <option>female</option>
+          <option>other</option>
+        </select>
+      </div>
+      <div>
+      <button type='submit'>send</button>
+      <button type='reset' onClick={handleReset}>reset</button>
+      </div>
+
+    </form>
   )
 }
 
